@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {Map, GoogleApiWrapper, Marker} from 'google-map-react';
+import {Map, GoogleApiWrapper, Marker} from 'google-maps-react';
 import Data from '../data/users.json';
 
 const style = {
+  margin: '0 auto',
   width: '100%',
-  height: '100%'
+  height: '60%'
 }
 
 class MapContainer extends Component {
@@ -14,7 +15,8 @@ class MapContainer extends Component {
         <Map
           google={this.props.google}
           style={style}
-          zoom={4}
+          zoom={3}
+          padding="16%"
         >
         {Data.map((detail, i) => {
           return (
