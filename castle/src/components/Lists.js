@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Data from '../data/users.json';
-import {Container, Card, Menu, Table} from 'semantic-ui-react';
+import {Table, Card, Pagination} from 'semantic-ui-react';
 //import 'semantic-ui-react/semantic.min.css';
 
 class Lists extends Component {
@@ -12,42 +12,43 @@ class Lists extends Component {
     })
   }
   render(){
-    const {activeItem} = this.state
     return (
       <div>
-        <Container>
-          <h2>Castle Project</h2>
-          {Data.map((detail, i) => {
-            return (
-              <div>
-                <Menu>
-                  <Menu.Item
-                    key={i}
-                    color={(() => {
-                      if(detail.risk <= 0.89) return "orange"
-                    })()}
-                    name="Suspicious"
-                    active={activeItem === "Suspicious"}
-                    onClick={this.handleItemClick}
-                  >
-                  Suspicious{" "}
-                  </Menu.Item>
-                  <Menu.Item
-                    key={i}
-                    color={(() => {
-                      if(detail.risk <= 0.9) return "red"
-                    })()}
-                    name="Suspicious"
-                    active={activeItem === "Suspicious"}
-                    onClick={this.handleItemClick}
-                  >
-                  Suspicious{" "}
-                  </Menu.Item>
-                </Menu>
-              </div>
-            )
-          })}
-        </Container>
+        {Data.map((detail, i) => {
+          return (
+            <div>
+              <Table key={i} compact={true} attached={true}>
+                <Table.Body>
+                  <Table.Row>
+                    <Table.Cell width={3}>
+                      <Card key={i}
+                        color={(() => {
+                          if(detail.risk <= 0.6) return "green"
+                          else if(detail <= 0.89) return "yellow"
+                          else return "red"
+                        })()}
+                        >
+                          <Card.Content header={detail.risk} />
+                          <Card.Content extra />
+                        </Card>{" "}
+                    </Table.Cell>{" "}
+                    <Table.Cell width={3}>{detail.id}</Table.Cell>{" "}
+                    <Table.Cell width={3}>{detail.name}</Table.Cell>{" "}
+                    <Table.Cell width={3}>{detail.email_md5}</Table.Cell>{" "}
+                    <Table.Cell width={3}>
+                      {" "}
+                      {detail.last_location.ip}{" "}
+                      <a href={detail.last_location.location}>
+                        {" "}
+                        Click {detail.location} {" "}
+                      </a>{" "}
+                    </Table.Cell>{" "}
+                  </Table.Row>{" "}
+                </Table.Body>{" "}
+              </Table>{" "}
+            </div>
+          )
+        })}{" "}
       </div>
     )
   }
